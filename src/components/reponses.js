@@ -84,6 +84,37 @@ const passagere2 = [
 	},
 ];
 
+const motifsDeplacement = [
+	{ id: 1, output: "Rentrer", text: "Rentrer chez vous" },
+	{ id: 2, output: "Visite proches", text: "Visite à des proches" },
+	{ id: 3, output: "Vacances / Loisirs", text: "Vacances / Loisirs" },
+	{
+		id: 4,
+		output: "Logement occasionnel",
+		text: "Rejoindre un logement occasionnel",
+	},
+	{
+		id: 5,
+		output: "Déplacement professionnel",
+		text: "Déplacement professionnel",
+	},
+	{ id: 6, output: "Autre", text: "Autre (préciser)" },
+];
+
+const raisonsDeplacement = [
+	{ id: 1, output: "Visite proches", text: "Visite à des proches" },
+	{ id: 2, output: "Vacances / Loisirs", text: "Vacances / Loisirs" },
+	{
+		id: 3,
+		output: "Logement occasionnel",
+		text: "Rejoindre un logement occasionnel",
+	},
+	{
+		id: 4,
+		output: "Déplacement professionnel",
+		text: "Déplacement professionnel",
+	},
+];
 
 
 
@@ -94,4 +125,6 @@ export {
 	modesDeplacement,
 	passagere1,
 	passagere2,
+	motifsDeplacement,
+	raisonsDeplacement,
 };

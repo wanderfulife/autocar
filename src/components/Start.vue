@@ -48,7 +48,7 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
-		<div id="6" v-if="level === 5">
+		<div id="6-7" v-if="level === 5">
 			<h1> Comment êtes-vous arrivé·e à Lille Europe ? </h1>
 			<select v-model="ModeDeplacement" class="form-control">
 				<option v-for="option in modesDeplacement" :key="option.id" :value="option.output">
@@ -75,7 +75,37 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
-		<div v-if="level === 6">
+		<div id="8" v-if="level === 6">
+			<h1>Avec combien de personnes effectuez-vous ce déplacement en autocar ? (si tout seul, alors zéro)</h1>
+			<h1>(réponse numérique entre 0 et 99)</h1>
+			<input class="form-control" type="text" v-model="NbrPers" placeholder="Precisions">
+			<button v-if="NbrPers" @click="next" class="btn-next">Suivant</button>
+			<button @click="back" class="btn-return">retour</button>
+		</div>
+
+
+		<div id="9" v-if="level === 7">
+			<h1>Quel est le motif de votre voyage ?</h1>
+			<select v-model="Motif" class="form-control">
+				<option v-for="option in motifsDeplacement" :key="option.id" :value="option.output">
+					{{ option.text }}
+				</option>
+			</select>
+			<div v-if="Motif === 'Rentrer'">
+				<h1>Pour quel motif êtes-vous venu à Lille ?</h1>
+				<select v-model="MotifVenue" class="form-control">
+					<option v-for="option in raisonsDeplacement" :key="option.id" :value="option.output">
+						{{ option.text }}
+					</option>
+				</select>
+			</div>
+			<input v-if="Motif === 'Autre'" class="form-control" type="text" v-model="PrecisionMotif"
+				placeholder="Precisez">
+			<button v-if="Motif" @click="next" class="btn-next">Suivant</button>
+			<button @click="back" class="btn-return">retour</button>
+		</div>
+
+		<div v-if="level === 8">
 			<button @click="submitSurvey" class="btn-next">FINIR QUESTIONNAIRE</button>
 			<button @click="back" class="btn-return">retour</button>
 		</div>
@@ -89,7 +119,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { nbPersArret, OptionsTransport, modesDeplacement, passagere1, passagere2 } from "./reponses";
+import { nbPersArret, OptionsTransport, modesDeplacement, passagere1, passagere2, motifsDeplacement, raisonsDeplacement } from "./reponses";
 // import GareSelector from "./GareSelector.vue";
 import CommuneSelector from './CommuneSelector.vue';
 import { db } from "../firebaseConfig";
@@ -108,9 +138,10 @@ const ModeDeplacement = ref('');
 const ModeDeplacementPrecision = ref('');
 const PassagerQ1 = ref('');
 const PassagerQ2 = ref('');
-
-
-
+const NbrPers = ref('');
+const Motif = ref('');
+const MotifVenue = ref('');
+const PrecisionMotif = ref('');
 
 
 
@@ -147,6 +178,11 @@ const submitSurvey = async () => {
 		ModeDeplacementPrecision: ModeDeplacementPrecision.value,
 		PassagerQ1: PassagerQ1.value,
 		PassagerQ2: PassagerQ2.value,
+		NbrPers: NbrPers.value,
+		Motif: Motif.value,
+		MotifVenue: MotifVenue.value,
+		PrecisionMotif: PrecisionMotif.value,
+
 	});
 	level.value = 1;
 	startDate.value = "";
@@ -158,6 +194,11 @@ const submitSurvey = async () => {
 	ModeDeplacementPrecision.value = "";
 	PassagerQ1.value = "";
 	PassagerQ2.value = "";
+	NbrPers.value = "";
+	Motif.value = "";
+	MotifVenue.value = "";
+	PrecisionMotif.value = "";
+
 };
 
 const downloadData = async () => {
@@ -182,6 +223,11 @@ const downloadData = async () => {
 			ModeDeplacementPrecision: "ModeDeplacementPrecision",
 			PassagerQ1: "PassagerQ1",
 			PassagerQ2: "PassagerQ2",
+			NbrPers: "NbrPers",
+			Motif: "Motif",
+			MotifVenue: "MotifVenue",
+			PrecisionMotif: "PrecisionMotif",
+
 
 		};
 
@@ -207,6 +253,11 @@ const downloadData = async () => {
 				ModeDeplacementPrecision: docData.ModeDeplacementPrecision || "",
 				PassagerQ1: docData.PassagerQ1 || "",
 				PassagerQ2: docData.PassagerQ2 || "",
+				NbrPers: docData.NbrPers || "",
+				Motif: docData.Motif || "",
+				MotifVenue: docData.MotifVenue || "",
+				PrecisionMotif: docData.PrecisionMotif || "",
+
 			};
 			data.push(mappedData);
 
