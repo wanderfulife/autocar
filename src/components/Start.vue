@@ -213,7 +213,102 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
-		<div v-if="level === 13">
+		<div id="16" v-if="level === 13">
+			<h1> Pour vous, l’idéal pour attendre votre autocar, c’est :</h1>
+			<select v-model="Amenagement" class="form-control">
+				<option v-for="option in amenagementsArretsBus" :key="option.id" :value="option.output">
+					{{ option.text }}
+				</option>
+			</select>
+			<button v-if="Amenagement" @click="next" class="btn-next">Suivant</button>
+			<button @click="back" class="btn-return">retour</button>
+		</div>
+
+
+		<div id="17" v-if="level === 14">
+			<h1>Parmi ces services, quels sont les 2 plus importants dans un espace d’attente des cars selon vous :</h1>
+			<input type="checkbox" id="1" value="Vente de repas, boissons ou snacks" v-model="Services">
+			<label for="1">Vente de repas, boissons ou snacks</label>
+			<input type="checkbox" id="2" value="Consignes à bagages automatiques" v-model="Services">
+			<label for="2">Consignes à bagages automatiques</label>
+			<input type="checkbox" id="3" value="Wi-Fi" v-model="Services">
+			<label for="3">Wi-Fi</label>
+			<input type="checkbox" id="4" value="Toilettes" v-model="Services">
+			<label for="4">Toilettes</label>
+			<input type="checkbox" id="5" value="Prises de courant" v-model="Services">
+			<label for="5">Prises de courant</label>
+			<button v-if="Services" @click="next" class="btn-next">Suivant</button>
+			<button @click="back" class="btn-return">retour</button>
+		</div>
+
+		<div id="18" v-if="level === 15">
+			<h1> Concernant l’information, vous préférez :</h1>
+			<select v-model="Info" class="form-control">
+				<option v-for="option in informationsArretsBus" :key="option.id" :value="option.output">
+					{{ option.text }}
+				</option>
+			</select>
+			<button v-if="Info" @click="next" class="btn-next">Suivant</button>
+			<button @click="back" class="btn-return">retour</button>
+		</div>
+
+		<div id="19" v-if="level === 16">
+			<h1>En matière de sécurité, vous préférez :</h1>
+			<select v-model="Securite" class="form-control">
+				<option v-for="option in securiteArretsBus" :key="option.id" :value="option.output">
+					{{ option.text }}
+				</option>
+			</select>
+			<button v-if="Securite" @click="next" class="btn-next">Suivant</button>
+			<button @click="back" class="btn-return">retour</button>
+		</div>
+
+		<div id="20" v-if="level === 17">
+			<h1>Vous êtes…</h1>
+			<select v-model="Genre" class="form-control">
+				<option v-for="option in optionsGenre" :key="option.id" :value="option.output">
+					{{ option.text }}
+				</option>
+			</select>
+			<button v-if="Genre" @click="next" class="btn-next">Suivant</button>
+			<button @click="back" class="btn-return">retour</button>
+		</div>
+
+		<div id="21" v-if="level === 18">
+			<h1>Quel est votre âge ?</h1>
+			<select v-model="Age" class="form-control">
+				<option v-for="option in tranchesAge" :key="option.id" :value="option.output">
+					{{ option.text }}
+				</option>
+			</select>
+			<button v-if="Age" @click="next" class="btn-next">Suivant</button>
+			<button @click="back" class="btn-return">retour</button>
+		</div>
+
+		<div id="22" v-if="level === 19">
+			<h1>Dans quel pays habitez-vous ?</h1>
+			<h1>(Si réside en France) Quel est le code postal de votre commune de résidence ?</h1>
+			<div>
+				<CommuneSelector v-model="PaysCommune" />
+			</div>
+			<button v-if="PaysCommune" @click="next" class="btn-next">Suivant</button>
+			<button @click="back" class="btn-return">retour</button>
+		</div>
+
+		<div id="23" v-if="level === 20">
+			<h1> Quelle est votre catégorie socio-professionnelle ? </h1>
+			<select v-model="Profession" class="form-control">
+				<option v-for="option in categoriesProfessionnelles" :key="option.id" :value="option.output">
+					{{ option.text }}
+				</option>
+			</select>
+			<input v-if="Profession === 'Autre'" class="form-control" type="text" v-model="PrecisionProfession"
+				placeholder="Precisions">
+			<button v-if="Profession" @click="next" class="btn-next">Suivant</button>
+			<button @click="back" class="btn-return">retour</button>
+		</div>
+
+		<div v-if="level === 21">
 			<button @click="submitSurvey" class="btn-next">FINIR QUESTIONNAIRE</button>
 			<button @click="back" class="btn-return">retour</button>
 		</div>
@@ -230,7 +325,10 @@ import { ref } from "vue";
 import {
 	nbPersArret, OptionsTransport, modesDeplacement, passagere1, passagere2, motifsDeplacement,
 	raisonsDeplacement, paysOptions, lieuxFrance, lieuxBelgique,
-	frequenceDeplacement, frequences, motifsVoyage
+	frequenceDeplacement, frequences, motifsVoyage,
+	amenagementsArretsBus, informationsArretsBus,
+	securiteArretsBus, optionsGenre, tranchesAge,
+	categoriesProfessionnelles
 } from "./reponses";
 // import GareSelector from "./GareSelector.vue";
 import CommuneSelector from './CommuneSelector.vue';
@@ -264,6 +362,16 @@ const MotifLD = ref([]);
 const PrecisionMotifLD = ref('');
 const Critere = ref([]);
 const PrecisionCritere = ref('');
+const Amenagement = ref('');
+const Services = ref([]);
+const Info = ref('');
+const Securite = ref('');
+const Genre = ref('');
+const Age = ref('');
+const PaysCommune = ref('');
+const Profession = ref('');
+const PrecisionProfession = ref('');
+
 
 
 const startSurvey = () => {
@@ -312,6 +420,15 @@ const submitSurvey = async () => {
 		PrecisionMotifLD: PrecisionMotifLD.value,
 		Critere: Critere.value,
 		PrecisionCritere: PrecisionCritere.value,
+		Amenagement: Amenagement.value,
+		Services: Services.value,
+		Info: Info.value,
+		Securite: Securite.value,
+		Genre: Genre.value,
+		Age: Age.value,
+		PaysCommune: PaysCommune.value,
+		Profession: Profession.value,
+		PrecisionProfession: PrecisionProfession.value,
 	});
 	level.value = 1;
 	startDate.value = "";
@@ -334,12 +451,18 @@ const submitSurvey = async () => {
 	Frequence.value = "";
 	FrequenceLille.value = "";
 	MotifLD.value = "";
-	PrecisionMotifLD.value = "";	
-	Critere.value = "";	
-	PrecisionCritere.value = "";	
-
-	
-	
+	PrecisionMotifLD.value = "";
+	Critere.value = "";
+	PrecisionCritere.value = "";
+	Amenagement.value = "";
+	Services.value = "";
+	Info.value = "";
+	Securite.value = "";
+	Genre.value = "";
+	Age.value = "";
+	PaysCommune.value = "";
+	Profession.value = "";
+	PrecisionProfession.value = "";
 };
 
 const downloadData = async () => {
@@ -378,6 +501,15 @@ const downloadData = async () => {
 			PrecisionMotifLD: "PrecisionMotifLD",
 			Critere: "Critere",
 			PrecisionCritere: "PrecisionCritere",
+			Amenagement: "Amenagement",
+			Services: "Services",
+			Info: "Info",
+			Securite: "Securite",
+			Genre: "Genre",
+			Age: "Age",
+			PaysCommune: "PaysCommune",
+			Profession: "Profession",
+			PrecisionProfession: "PrecisionProfession",
 		};
 
 		// Initialize maxWidths with header lengths
@@ -410,12 +542,21 @@ const downloadData = async () => {
 				FrPrecision: docData.FrPrecision || "",
 				BePrecision: docData.BePrecision || "",
 				PaysPrecision: docData.PaysPrecision || "",
-				Frequence: docData.Frequence || "",	
+				Frequence: docData.Frequence || "",
 				FrequenceLille: docData.FrequenceLille || "",
 				MotifLD: docData.MotifLD || "",
 				PrecisionMotifLD: docData.PrecisionMotifLD || "",
 				Critere: docData.Critere || "",
 				PrecisionCritere: docData.PrecisionCritere || "",
+				Amenagement: docData.Amenagement || "",
+				Services: docData.Services || "",
+				Info: docData.Info || "",
+				Securite: docData.Securite || "",
+				Genre: docData.Genre || "",
+				Age: docData.Age || "",
+				PaysCommune: docData.PaysCommune || "",
+				Profession: docData.Profession || "",
+				PrecisionProfession: docData.PrecisionProfession || "",
 			};
 			// Extract MotifLD key-value pairs and update headers dynamically
 			if (docData.MotifLD) {
@@ -438,6 +579,17 @@ const downloadData = async () => {
 				}
 				// Remove the trailing comma and space from the string
 				mappedData.Critere = critereString.slice(0, -2);
+			}
+
+			if (docData.Services) {
+				let servicesString = "";
+				for (const key in docData.Services) {
+					const value = docData.Services[key];
+					// You can customize the separator here (e.g., comma, semicolon)
+					servicesString += `${key}: ${value}, `;
+				}
+				// Remove the trailing comma and space from the string
+				mappedData.Services = servicesString.slice(0, -2);
 			}
 
 			data.push(mappedData);

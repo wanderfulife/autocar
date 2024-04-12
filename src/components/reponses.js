@@ -187,8 +187,98 @@ const motifsVoyage = [
 	{ id: 5, output: "Autre", text: "Autre (préciser)" },
 ];
 
+const amenagementsArretsBus = [
+	{
+		id: 1,
+		output: "Abris voyageur grands et confortables",
+		text: "Des « abris voyageur » suffisamment grands et confortables au plus près des cars",
+	},
+	{
+		id: 2,
+		output: "Parvis avec places assises",
+		text: "Un vaste parvis à proximité des arrêts de cars avec des places assises vous permettant de vous isoler des autres voyageurs",
+	},
+	{
+		id: 3,
+		output: "Espace d’attente intérieur chauffé",
+		text: "Un espace d’attente en intérieur chauffé mais possiblement un peu éloigné des cars",
+	},
+];
 
+const informationsArretsBus = [
+	{
+		id: 1,
+		output: "Écrans d'information temps réel",
+		text: "Des Écrans d’information « temps réel » sur les départs et les arrivées",
+	},
+	{
+		id: 2,
+		output: "Annonces sonores départs et arrivées",
+		text: "Des Annonces sonores sur les départs et les arrivées",
+	},
+	{
+		id: 3,
+		output: "Affichage fiches horaires",
+		text: "Un affichage des fiches horaires théoriques",
+	},
+];
+const securiteArretsBus = [
+	{ id: 1, output: "Vidéosurveillance", text: "Vidéosurveillance" },
+	{ id: 2, output: "Présence humaine", text: "Une présence humaine" },
+	{
+		id: 3,
+		output: "Espace bien éclairé",
+		text: "Un espace bien éclairé visible c’est suffisant",
+	},
+];
 
+const optionsGenre = [
+	{ id: 1, output: "Homme", text: "Un homme" },
+	{ id: 2, output: "Femme", text: "Une femme" },
+	{
+		id: 3,
+		output: "Ne souhaite pas répondre",
+		text: "Je ne souhaite pas répondre",
+	},
+];
+
+const tranchesAge = [
+	{ id: 1, output: "15/17 ans", text: "15/17 ans" },
+	{ id: 2, output: "18/29 ans", text: "18/29 ans" },
+	{ id: 3, output: "30/44 ans", text: "30/44 ans" },
+	{ id: 4, output: "45/59 ans", text: "45/59 ans" },
+	{ id: 5, output: "60/74 ans", text: "60/74 ans" },
+	{ id: 6, output: "75 ans et plus", text: "75 ans et plus" },
+];
+
+const categoriesProfessionnelles = [
+	{ id: 1, output: "Agriculteur·rice", text: "Agriculteur·rice" },
+	{
+		id: 2,
+		output: "Artisan·ne, commerçant·e, chef·fe d’entreprise",
+		text: "Artisan·ne, commerçant·e, chef·fe d’entreprise",
+	},
+	{
+		id: 3,
+		output: "Cadre, profession intellectuelle supérieure",
+		text: "Cadre, profession intellectuelle supérieure",
+	},
+	{
+		id: 4,
+		output: "Profession intermédiaire",
+		text: "Profession intermédiaire",
+	},
+	{ id: 5, output: "Employé·e", text: "Employé·e" },
+	{ id: 6, output: "Ouvrier·e", text: "Ouvrier·e" },
+	{ id: 7, output: "Etudiant·e", text: "Etudiant·e" },
+	{
+		id: 8,
+		output: "Sans activité professionnelle",
+		text: "Sans activité professionnelle",
+	},
+	{ id: 9, output: "Retraité·e", text: "Retraité·e" },
+	{ id: 10, output: "Autre", text: "Autre (préciser)" },
+];
 
 
 
@@ -207,4 +297,10 @@ export {
 	frequenceDeplacement,
 	frequences,
 	motifsVoyage,
+	amenagementsArretsBus,
+	informationsArretsBus,
+	securiteArretsBus,
+	optionsGenre,
+	tranchesAge,
+	categoriesProfessionnelles,
 };
