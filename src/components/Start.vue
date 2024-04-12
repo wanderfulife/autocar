@@ -179,7 +179,41 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
-		<div v-if="level === 12">
+		<div id="15" v-if="level === 12">
+			<h1>Quand vous venez attendre un car, quels sont les choses les plus importantes que vous souhaitez trouver
+				? (Classé de 1 à 3 max)</h1>
+			<input type="checkbox" id="1" value="Se sentir en sécurité" v-model="Critere">
+			<label for="1">Se sentir en sécurité</label>
+			<input type="checkbox" id="2" value="Pouvoir s’abriter" v-model="Critere">
+			<label for="2">Pouvoir s’abriter</label>
+			<input type="checkbox" id="3" value="Pouvoir s’asseoir" v-model="Critere">
+			<label for="3">Pouvoir s’asseoir</label>
+			<input type="checkbox" id="4" value="Être proche du centre-ville" v-model="Critere">
+			<label for="4">Être proche du centre-ville</label>
+			<input type="checkbox" id="5" value="Être proche d’une station de transport collectif" v-model="Critere">
+			<label for="5">Être proche d’une station de transport collectif</label>
+			<input type="checkbox" id="6" value="Pouvoir se garer à proximité en voiture" v-model="Critere">
+			<label for="6">Pouvoir se garer à proximité en voiture</label>
+			<input type="checkbox" id="7" value="Pouvoir se garer à proximité à vélo" v-model="Critere">
+			<label for="7">Pouvoir se garer à proximité à vélo</label>
+			<input type="checkbox" id="8" value="Trouver facilement mon car" v-model="Critere">
+			<label for="8">Trouver facilement mon car</label>
+			<input type="checkbox" id="9" value="Avoir un espace d’attente fermé" v-model="Critere">
+			<label for="9">Avoir un espace d’attente fermé</label>
+			<input type="checkbox" id="10" value="Avoir le Wifi" v-model="Critere">
+			<label for="10">Avoir le Wifi</label>
+			<input type="checkbox" id="11" value="Avoir un espace de vente de repas/boisson" v-model="Critere">
+			<label for="11">Avoir un espace de vente de repas/boisson</label>
+			<input type="checkbox" id="12" value="Autre" v-model="Critere">
+			<label for="12">Autre (à préciser)</label>
+
+			<input v-if="Critere.includes('Autre')" class="form-control" type="text" v-model="PrecisionCritere"
+				placeholder="Precisions">
+			<button v-if="Critere" @click="next" class="btn-next">Suivant</button>
+			<button @click="back" class="btn-return">retour</button>
+		</div>
+
+		<div v-if="level === 13">
 			<button @click="submitSurvey" class="btn-next">FINIR QUESTIONNAIRE</button>
 			<button @click="back" class="btn-return">retour</button>
 		</div>
@@ -228,9 +262,8 @@ const Frequence = ref('');
 const FrequenceLille = ref('');
 const MotifLD = ref([]);
 const PrecisionMotifLD = ref('');
-
-
-
+const Critere = ref([]);
+const PrecisionCritere = ref('');
 
 
 const startSurvey = () => {
@@ -277,8 +310,8 @@ const submitSurvey = async () => {
 		FrequenceLille: FrequenceLille.value,
 		MotifLD: MotifLD.value,
 		PrecisionMotifLD: PrecisionMotifLD.value,
-
-
+		Critere: Critere.value,
+		PrecisionCritere: PrecisionCritere.value,
 	});
 	level.value = 1;
 	startDate.value = "";
@@ -302,6 +335,11 @@ const submitSurvey = async () => {
 	FrequenceLille.value = "";
 	MotifLD.value = "";
 	PrecisionMotifLD.value = "";	
+	Critere.value = "";	
+	PrecisionCritere.value = "";	
+
+	
+	
 };
 
 const downloadData = async () => {
@@ -338,6 +376,8 @@ const downloadData = async () => {
 			FrequenceLille: "FrequenceLille",
 			MotifLD: "MotifLD",
 			PrecisionMotifLD: "PrecisionMotifLD",
+			Critere: "Critere",
+			PrecisionCritere: "PrecisionCritere",
 		};
 
 		// Initialize maxWidths with header lengths
@@ -374,6 +414,8 @@ const downloadData = async () => {
 				FrequenceLille: docData.FrequenceLille || "",
 				MotifLD: docData.MotifLD || "",
 				PrecisionMotifLD: docData.PrecisionMotifLD || "",
+				Critere: docData.Critere || "",
+				PrecisionCritere: docData.PrecisionCritere || "",
 			};
 			// Extract MotifLD key-value pairs and update headers dynamically
 			if (docData.MotifLD) {
@@ -386,6 +428,18 @@ const downloadData = async () => {
 				// Remove the trailing comma and space from the string
 				mappedData.MotifLD = motifLDString.slice(0, -2);
 			}
+
+			if (docData.Critere) {
+				let critereString = "";
+				for (const key in docData.Critere) {
+					const value = docData.Critere[key];
+					// You can customize the separator here (e.g., comma, semicolon)
+					critereString += `${key}: ${value}, `;
+				}
+				// Remove the trailing comma and space from the string
+				mappedData.Critere = critereString.slice(0, -2);
+			}
+
 			data.push(mappedData);
 
 			// Update maxWidths for each key in mappedData
