@@ -116,6 +116,80 @@ const raisonsDeplacement = [
 	},
 ];
 
+const paysOptions = [
+	{ id: 1, output: "France", text: "France" },
+	{ id: 2, output: "Belgique", text: "Belgique" },
+	{ id: 3, output: "Pays Bas", text: "Pays Bas" },
+	{ id: 4, output: "Allemagne", text: "Allemagne" },
+	{ id: 5, output: "Royaume uni", text: "Royaume uni" },
+	{ id: 6, output: "Autre", text: "Autre (préciser)" },
+];
+
+const lieuxFrance = [
+	{ id: 1, output: "Aéroport", text: "Aéroport" },
+	{
+		id: 2,
+		output: "Paris / Région parisienne",
+		text: "Paris / Région parisienne",
+	},
+	{ id: 3, output: "Hauts-de-France", text: "Hauts-de-France" },
+	{ id: 4, output: "Autre", text: "Autre" },
+];
+
+
+const lieuxBelgique = [
+	{ id: 1, output: "Aéroport", text: "Aéroport" },
+	{
+		id: 2,
+		output: "Hors aéroport",
+		text: "Hors aéroport",
+	},
+];
+
+const frequenceDeplacement = [
+	{
+		id: 1,
+		output: "Première fois",
+		text: "C’est la première fois",
+	},
+	{ id: 2, output: "1 fois par semaine", text: "Au moins 1 fois par semaine" },
+	{ id: 3, output: "1 fois par mois", text: "Au moins 1 fois par mois" },
+	{ id: 4, output: "Plusieurs fois par an", text: "Plusieurs fois par an" },
+	{ id: 5, output: "Moins d’1 fois par an", text: "Moins d’1 fois par an" },
+	{
+		id: 6,
+		output: "Jamais",
+		text: "Jamais",
+	},
+];
+
+const frequences = [
+	{ id: 1, output: "Première fois", text: "C’est la première fois" },
+	{ id: 2, output: "1 fois par semaine", text: "Au moins 1 fois par semaine" },
+	{ id: 3, output: "1 fois par mois", text: "Au moins 1 fois par mois" },
+	{ id: 4, output: "Plusieurs fois par an", text: "Plusieurs fois par an" },
+	{ id: 5, output: "Moins d’1 fois par an", text: "Moins d’1 fois par an" },
+];
+
+const motifsVoyage = [
+	{
+		id: 1,
+		output: "Déplacement professionnel",
+		text: "Déplacement professionnel",
+	},
+	{ id: 2, output: "Visite à des proches", text: "Visite à des proches" },
+	{ id: 3, output: "Vacances / Loisirs", text: "Vacances / Loisirs" },
+	{
+		id: 4,
+		output: "Logement occasionnel",
+		text: "Rejoindre un logement occasionnel",
+	},
+	{ id: 5, output: "Autre", text: "Autre (préciser)" },
+];
+
+
+
+
 
 
 
@@ -127,4 +201,10 @@ export {
 	passagere2,
 	motifsDeplacement,
 	raisonsDeplacement,
+	paysOptions,
+	lieuxFrance,
+	lieuxBelgique,
+	frequenceDeplacement,
+	frequences,
+	motifsVoyage,
 };

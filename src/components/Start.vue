@@ -84,7 +84,7 @@
 		</div>
 
 
-		<div id="9" v-if="level === 7">
+		<div id="9 - 10" v-if="level === 7">
 			<h1>Quel est le motif de votre voyage ?</h1>
 			<select v-model="Motif" class="form-control">
 				<option v-for="option in motifsDeplacement" :key="option.id" :value="option.output">
@@ -105,7 +105,76 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
-		<div v-if="level === 8">
+		<div id="11" v-if="level === 8">
+			<h1>Quelle est votre destination avec cet autocar ? </h1>
+			<select v-model="Pays" class="form-control">
+				<option v-for="option in paysOptions" :key="option.id" :value="option.output">
+					{{ option.text }}
+				</option>
+			</select>
+			<div v-if="Pays === 'France'">
+				<h1>Note enquêteur : la réponse « Aéroport » l’emporte sur Paris ou Hauts de France : si on se rend à
+					l’aéroport de Lille Lesquin ou de Roissy, bien cocher «France - aéroport »</h1>
+				<select v-model="FrPrecision" class="form-control">
+					<option v-for="option in lieuxFrance" :key="option.id" :value="option.output">
+						{{ option.text }}
+					</option>
+				</select>
+			</div>
+			<div v-if="Pays === 'Belgique'">
+				<h1>Precisez</h1>
+				<select v-model="BePrecision" class="form-control">
+					<option v-for="option in lieuxBelgique" :key="option.id" :value="option.output">
+						{{ option.text }}
+					</option>
+				</select>
+			</div>
+			<input v-if="Pays === 'Autre'" class="form-control" type="text" v-model="PaysPrecision"
+				placeholder="Precisez">
+			<button v-if="Pays" @click="next" class="btn-next">Suivant</button>
+			<button @click="back" class="btn-return">retour</button>
+		</div>
+
+		<div id="12" v-if="level === 9">
+			<h1> A quelle fréquence utilisez-vous les cars longue distance de type FlixBus, OuiBus, Blablacar… que ce
+				soit à Lille ou ailleurs ? (les navettes aéroports type Flibco ne sont pas concernées par cette
+				question) </h1>
+			<select v-model="Frequence" class="form-control">
+				<option v-for="option in frequenceDeplacement" :key="option.id" :value="option.output">
+					{{ option.text }}
+				</option>
+			</select>
+			<button v-if="Frequence" @click="next" class="btn-next">Suivant</button>
+			<button @click="back" class="btn-return">retour</button>
+		</div>
+
+		<div id="13" v-if="level === 10">
+			<h1> Avez-vous l’habitude de prendre l’autocar à Lille Europe (y compris navettes aéroports, mais ne pas
+				tenir compte des bus Ilévia)? </h1>
+			<select v-model="FrequenceLille" class="form-control">
+				<option v-for="option in frequences" :key="option.id" :value="option.output">
+					{{ option.text }}
+				</option>
+			</select>
+			<button v-if="FrequenceLille" @click="next" class="btn-next">Suivant</button>
+			<button @click="back" class="btn-return">retour</button>
+		</div>
+
+		<div id="14" v-if="level === 11">
+			<h1> Pour quel(s) motif(s) utilisez-vous généralement les cars longue distance de type FlixBus, BlaBlaCar… ?
+			</h1>
+			<select v-model="MotifLD" class="form-control">
+				<option v-for="option in motifsVoyage" :key="option.id" :value="option.output">
+					{{ option.text }}
+				</option>
+			</select>
+			<input v-if="MotifLD === 'Autre'" class="form-control" type="text" v-model="PrecisionMotifLD"
+				placeholder="Precisions">
+			<button v-if="MotifLD" @click="next" class="btn-next">Suivant</button>
+			<button @click="back" class="btn-return">retour</button>
+		</div>
+
+		<div v-if="level === 12">
 			<button @click="submitSurvey" class="btn-next">FINIR QUESTIONNAIRE</button>
 			<button @click="back" class="btn-return">retour</button>
 		</div>
@@ -119,7 +188,11 @@
 
 <script setup>
 import { ref } from "vue";
-import { nbPersArret, OptionsTransport, modesDeplacement, passagere1, passagere2, motifsDeplacement, raisonsDeplacement } from "./reponses";
+import {
+	nbPersArret, OptionsTransport, modesDeplacement, passagere1, passagere2, motifsDeplacement,
+	raisonsDeplacement, paysOptions, lieuxFrance, lieuxBelgique,
+	frequenceDeplacement, frequences, motifsVoyage
+} from "./reponses";
 // import GareSelector from "./GareSelector.vue";
 import CommuneSelector from './CommuneSelector.vue';
 import { db } from "../firebaseConfig";
@@ -142,6 +215,15 @@ const NbrPers = ref('');
 const Motif = ref('');
 const MotifVenue = ref('');
 const PrecisionMotif = ref('');
+const Pays = ref('');
+const FrPrecision = ref('');
+const BePrecision = ref('');
+const PaysPrecision = ref('');
+const Frequence = ref('');
+const FrequenceLille = ref('');
+const MotifLD = ref('');
+const PrecisionMotifLD = ref('');
+
 
 
 
@@ -182,6 +264,17 @@ const submitSurvey = async () => {
 		Motif: Motif.value,
 		MotifVenue: MotifVenue.value,
 		PrecisionMotif: PrecisionMotif.value,
+		Pays: Pays.value,
+		FrPrecision: FrPrecision.value,
+		BePrecision: BePrecision.value,
+		PaysPrecision: PaysPrecision.value,
+		Frequence: Frequence.value,
+		FrequenceLille: FrequenceLille.value,
+		MotifLD: MotifLD.value,
+		PrecisionMotifLD: PrecisionMotifLD.value,
+
+		
+
 
 	});
 	level.value = 1;
@@ -198,7 +291,14 @@ const submitSurvey = async () => {
 	Motif.value = "";
 	MotifVenue.value = "";
 	PrecisionMotif.value = "";
-
+	Pays.value = "";
+	FrPrecision.value = "";
+	BePrecision.value = "";
+	PaysPrecision.value = "";
+	Frequence.value = "";
+	FrequenceLille.value = "";
+	MotifLD.value = "";
+	PrecisionMotifLD.value = "";	
 };
 
 const downloadData = async () => {
@@ -227,8 +327,14 @@ const downloadData = async () => {
 			Motif: "Motif",
 			MotifVenue: "MotifVenue",
 			PrecisionMotif: "PrecisionMotif",
-
-
+			Pays: "Pays",
+			FrPrecision: "FrPrecision",
+			BePrecision: "BePrecision",
+			PaysPrecision: "PaysPrecision",
+			Frequence: "Frequence",
+			FrequenceLille: "FrequenceLille",
+			MotifLD: "MotifLD",
+			PrecisionMotifLD: "PrecisionMotifLD",
 		};
 
 		// Initialize maxWidths with header lengths
@@ -257,7 +363,14 @@ const downloadData = async () => {
 				Motif: docData.Motif || "",
 				MotifVenue: docData.MotifVenue || "",
 				PrecisionMotif: docData.PrecisionMotif || "",
-
+				Pays: docData.Pays || "",
+				FrPrecision: docData.FrPrecision || "",
+				BePrecision: docData.BePrecision || "",
+				PaysPrecision: docData.PaysPrecision || "",
+				Frequence: docData.Frequence || "",	
+				FrequenceLille: docData.FrequenceLille || "",
+				MotifLD: docData.MotifLD || "",
+				PrecisionMotifLD: docData.PrecisionMotifLD || "",
 			};
 			data.push(mappedData);
 
