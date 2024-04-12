@@ -97,6 +97,8 @@
 						{{ option.text }}
 					</option>
 				</select>
+				<input v-if="MotifVenue === 'Autre'" class="form-control" type="text" v-model="PrecisionMotifVenue"
+					placeholder="Precisez">
 			</div>
 			<input v-if="Motif === 'Autre'" class="form-control" type="text" v-model="PrecisionMotif"
 				placeholder="Precisez">
@@ -371,6 +373,7 @@ const PassagerQ2 = ref('');
 const NbrPers = ref('');
 const Motif = ref('');
 const MotifVenue = ref('');
+const PrecisionMotifVenue = ref('');
 const PrecisionMotif = ref('');
 const Pays = ref('');
 const FrPrecision = ref('');
@@ -429,6 +432,7 @@ const submitSurvey = async () => {
 		NbrPers: NbrPers.value,
 		Motif: Motif.value,
 		MotifVenue: MotifVenue.value,
+		PrecisionMotifVenue: PrecisionMotifVenue.value,
 		PrecisionMotif: PrecisionMotif.value,
 		Pays: Pays.value,
 		FrPrecision: FrPrecision.value,
@@ -463,6 +467,7 @@ const submitSurvey = async () => {
 	NbrPers.value = "";
 	Motif.value = "";
 	MotifVenue.value = "";
+	PrecisionMotifVenue.value = "";
 	PrecisionMotif.value = "";
 	Pays.value = "";
 	FrPrecision.value = "";
@@ -510,6 +515,7 @@ const downloadData = async () => {
 			NbrPers: "NbrPers",
 			Motif: "Motif",
 			MotifVenue: "MotifVenue",
+			PrecisionMotifVenue: "PrecisionMotifVenue",
 			PrecisionMotif: "PrecisionMotif",
 			Pays: "Pays",
 			FrPrecision: "FrPrecision",
@@ -557,6 +563,7 @@ const downloadData = async () => {
 				NbrPers: docData.NbrPers || "",
 				Motif: docData.Motif || "",
 				MotifVenue: docData.MotifVenue || "",
+				PrecisionMotifVenue: docData.PrecisionMotifVenue || "",
 				PrecisionMotif: docData.PrecisionMotif || "",
 				Pays: docData.Pays || "",
 				FrPrecision: docData.FrPrecision || "",

@@ -114,6 +114,7 @@ const raisonsDeplacement = [
 		output: "Déplacement professionnel",
 		text: "Déplacement professionnel",
 	},
+	{ id: 5, output: "Autre", text: "Autre (préciser)" },
 ];
 
 const paysOptions = [
