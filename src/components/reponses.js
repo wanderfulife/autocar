@@ -174,7 +174,7 @@ const frequences = [
 const motifsVoyage = [
 	{
 		id: 1,
-		output: "Déplacement professionnel",
+		output: "professionnel",
 		text: "Déplacement professionnel",
 	},
 	{ id: 2, output: "Visite à des proches", text: "Visite à des proches" },

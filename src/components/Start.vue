@@ -161,14 +161,19 @@
 		</div>
 
 		<div id="14" v-if="level === 11">
-			<h1> Pour quel(s) motif(s) utilisez-vous généralement les cars longue distance de type FlixBus, BlaBlaCar… ?
+			<h1>Pour quel(s) motif(s) utilisez-vous généralement les cars longue distance de type FlixBus, BlaBlaCar… ?
 			</h1>
-			<select v-model="MotifLD" class="form-control">
-				<option v-for="option in motifsVoyage" :key="option.id" :value="option.output">
-					{{ option.text }}
-				</option>
-			</select>
-			<input v-if="MotifLD === 'Autre'" class="form-control" type="text" v-model="PrecisionMotifLD"
+			<input type="checkbox" id="1" value="Déplacement professionnel" v-model="MotifLD">
+			<label for="1">Déplacement professionnel </label>
+			<input type="checkbox" id="2" value="Visite à des proches" v-model="MotifLD">
+			<label for="2">Visite à des proches</label>
+			<input type="checkbox" id="3" value="Vacances / Loisirs" v-model="MotifLD">
+			<label for="3">Vacances / Loisirs</label>
+			<input type="checkbox" id="4" value="logement occasionnel" v-model="MotifLD">
+			<label for="4">Rejoindre un logement occasionnel</label>
+			<input type="checkbox" id="5" value="Autre" v-model="MotifLD">
+			<label for="5">Autre (préciser)</label>
+			<input v-if="MotifLD.includes('Autre')" class="form-control" type="text" v-model="PrecisionMotifLD"
 				placeholder="Precisions">
 			<button v-if="MotifLD" @click="next" class="btn-next">Suivant</button>
 			<button @click="back" class="btn-return">retour</button>
@@ -221,7 +226,7 @@ const BePrecision = ref('');
 const PaysPrecision = ref('');
 const Frequence = ref('');
 const FrequenceLille = ref('');
-const MotifLD = ref('');
+const MotifLD = ref([]);
 const PrecisionMotifLD = ref('');
 
 
@@ -272,8 +277,6 @@ const submitSurvey = async () => {
 		FrequenceLille: FrequenceLille.value,
 		MotifLD: MotifLD.value,
 		PrecisionMotifLD: PrecisionMotifLD.value,
-
-		
 
 
 	});
@@ -372,6 +375,17 @@ const downloadData = async () => {
 				MotifLD: docData.MotifLD || "",
 				PrecisionMotifLD: docData.PrecisionMotifLD || "",
 			};
+			// Extract MotifLD key-value pairs and update headers dynamically
+			if (docData.MotifLD) {
+				let motifLDString = "";
+				for (const key in docData.MotifLD) {
+					const value = docData.MotifLD[key];
+					// You can customize the separator here (e.g., comma, semicolon)
+					motifLDString += `${key}: ${value}, `;
+				}
+				// Remove the trailing comma and space from the string
+				mappedData.MotifLD = motifLDString.slice(0, -2);
+			}
 			data.push(mappedData);
 
 			// Update maxWidths for each key in mappedData
