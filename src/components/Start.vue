@@ -48,7 +48,34 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
-		<div v-if="level === 5">
+		<div id="6" v-if="level === 5">
+			<h1> Comment êtes-vous arrivé·e à Lille Europe ? </h1>
+			<select v-model="ModeDeplacement" class="form-control">
+				<option v-for="option in modesDeplacement" :key="option.id" :value="option.output">
+					{{ option.text }}
+				</option>
+			</select>
+			<div v-if="ModeDeplacement === 'Passager'">
+				<h1>Si voiture en tant que passag·er·ère </h1>
+				<select v-model="PassagerQ1" class="form-control">
+					<option v-for="option in passagere1" :key="option.id" :value="option.output">
+						{{ option.text }}
+					</option>
+				</select>
+				<h1>Le conducteur a-t-il … ?</h1>
+				<select v-model="PassagerQ2" class="form-control">
+					<option v-for="option in passagere2" :key="option.id" :value="option.output">
+						{{ option.text }}
+					</option>
+				</select>
+			</div>
+			<input v-if="ModeDeplacement === 'Autre'" class="form-control" type="text"
+				v-model="ModeDeplacementPrecision" placeholder="Precisez">
+			<button v-if="ModeDeplacement" @click="next" class="btn-next">Suivant</button>
+			<button @click="back" class="btn-return">retour</button>
+		</div>
+
+		<div v-if="level === 6">
 			<button @click="submitSurvey" class="btn-next">FINIR QUESTIONNAIRE</button>
 			<button @click="back" class="btn-return">retour</button>
 		</div>
@@ -62,7 +89,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { nbPersArret, OptionsTransport } from "./reponses";
+import { nbPersArret, OptionsTransport, modesDeplacement, passagere1, passagere2 } from "./reponses";
 // import GareSelector from "./GareSelector.vue";
 import CommuneSelector from './CommuneSelector.vue';
 import { db } from "../firebaseConfig";
@@ -77,6 +104,12 @@ const NbrPersArretBus = ref('');
 const NbrCarArretBus = ref('');
 const Compagnie = ref('');
 const CompagniePrecision = ref('');
+const ModeDeplacement = ref('');
+const ModeDeplacementPrecision = ref('');
+const PassagerQ1 = ref('');
+const PassagerQ2 = ref('');
+
+
 
 
 
@@ -110,6 +143,10 @@ const submitSurvey = async () => {
 		NbrCarArretBus: NbrCarArretBus.value,
 		Compagnie: Compagnie.value,
 		CompagniePrecision: CompagniePrecision.value,
+		ModeDeplacement: ModeDeplacement.value,
+		ModeDeplacementPrecision: ModeDeplacementPrecision.value,
+		PassagerQ1: PassagerQ1.value,
+		PassagerQ2: PassagerQ2.value,
 	});
 	level.value = 1;
 	startDate.value = "";
@@ -117,9 +154,10 @@ const submitSurvey = async () => {
 	NbrCarArretBus.value = "";
 	Compagnie.value = "";
 	CompagniePrecision.value = "";
-
-	
-	
+	ModeDeplacement.value = "";
+	ModeDeplacementPrecision.value = "";
+	PassagerQ1.value = "";
+	PassagerQ2.value = "";
 };
 
 const downloadData = async () => {
@@ -140,6 +178,11 @@ const downloadData = async () => {
 			NbrCarArretBus: "NbrCarArretBus",
 			Compagnie: "Compagnie",
 			CompagniePrecision: "CompagniePrecision",
+			ModeDeplacement: "ModeDeplacement",
+			ModeDeplacementPrecision: "ModeDeplacementPrecision",
+			PassagerQ1: "PassagerQ1",
+			PassagerQ2: "PassagerQ2",
+
 		};
 
 		// Initialize maxWidths with header lengths
@@ -160,6 +203,10 @@ const downloadData = async () => {
 				NbrCarArretBus: docData.NbrCarArretBus || "",
 				Compagnie: docData.Compagnie || "",
 				CompagniePrecision: docData.CompagniePrecision || "",
+				ModeDeplacement: docData.ModeDeplacement || "",
+				ModeDeplacementPrecision: docData.ModeDeplacementPrecision || "",
+				PassagerQ1: docData.PassagerQ1 || "",
+				PassagerQ2: docData.PassagerQ2 || "",
 			};
 			data.push(mappedData);
 
