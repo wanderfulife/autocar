@@ -19,8 +19,8 @@
 		</div>
 
 		<div id="4" v-if="level === 2">
-			<h1>Nombre de car aux arrêts de bus (taux d’occupation)</h1>
-			<input class="form-control" type="text" v-model="NbrCarArretBus" placeholder="Precisions">
+			<h1>Nombre de car aux arrêts de bus</h1>
+			<input class="form-control" type="text" v-model="NbrCarArretBus" placeholder="0">
 			<button v-if="NbrCarArretBus" @click="next" class="btn-next">Suivant</button>
 			<button @click="back" class="btn-return">retour</button>
 		</div>
@@ -56,7 +56,7 @@
 				</option>
 			</select>
 			<div v-if="ModeDeplacement === 'Passager'">
-				<h1>Si voiture en tant que passag·er·ère </h1>
+				<h1>Passag·er·ère :</h1>
 				<select v-model="PassagerQ1" class="form-control">
 					<option v-for="option in passagere1" :key="option.id" :value="option.output">
 						{{ option.text }}
@@ -76,9 +76,8 @@
 		</div>
 
 		<div id="8" v-if="level === 6">
-			<h1>Avec combien de personnes effectuez-vous ce déplacement en autocar ? (si tout seul, alors zéro)</h1>
-			<h1>(réponse numérique entre 0 et 99)</h1>
-			<input class="form-control" type="text" v-model="NbrPers" placeholder="Precisions">
+			<h1>Avec combien de personnes effectuez-vous ce déplacement en autocar ? <br>(si tout seul, alors zéro)</h1>
+			<input class="form-control" type="text" v-model="NbrPers" placeholder="0 - 99">
 			<button v-if="NbrPers" @click="next" class="btn-next">Suivant</button>
 			<button @click="back" class="btn-return">retour</button>
 		</div>
@@ -137,7 +136,7 @@
 
 		<div id="12" v-if="level === 9">
 			<h1> A quelle fréquence utilisez-vous les cars longue distance de type FlixBus, OuiBus, Blablacar… que ce
-				soit à Lille ou ailleurs ? (les navettes aéroports type Flibco ne sont pas concernées par cette
+				soit à Lille ou ailleurs ?<br> (les navettes aéroports type Flibco ne sont pas concernées par cette
 				question) </h1>
 			<select v-model="Frequence" class="form-control">
 				<option v-for="option in frequenceDeplacement" :key="option.id" :value="option.output">
@@ -163,16 +162,21 @@
 		<div id="14" v-if="level === 11">
 			<h1>Pour quel(s) motif(s) utilisez-vous généralement les cars longue distance de type FlixBus, BlaBlaCar… ?
 			</h1>
-			<input type="checkbox" id="1" value="Déplacement professionnel" v-model="MotifLD">
 			<label for="1">Déplacement professionnel </label>
-			<input type="checkbox" id="2" value="Visite à des proches" v-model="MotifLD">
+			<input type="checkbox" id="1" value="Déplacement professionnel" v-model="MotifLD">
+			<br>
 			<label for="2">Visite à des proches</label>
-			<input type="checkbox" id="3" value="Vacances / Loisirs" v-model="MotifLD">
+			<input type="checkbox" id="2" value="Visite à des proches" v-model="MotifLD">
+			<br>
 			<label for="3">Vacances / Loisirs</label>
-			<input type="checkbox" id="4" value="logement occasionnel" v-model="MotifLD">
+			<input type="checkbox" id="3" value="Vacances / Loisirs" v-model="MotifLD">
+			<br>
 			<label for="4">Rejoindre un logement occasionnel</label>
-			<input type="checkbox" id="5" value="Autre" v-model="MotifLD">
+			<input type="checkbox" id="4" value="logement occasionnel" v-model="MotifLD">
+			<br>
 			<label for="5">Autre (préciser)</label>
+			<input type="checkbox" id="5" value="Autre" v-model="MotifLD">
+			<br>
 			<input v-if="MotifLD.includes('Autre')" class="form-control" type="text" v-model="PrecisionMotifLD"
 				placeholder="Precisions">
 			<button v-if="MotifLD" @click="next" class="btn-next">Suivant</button>
@@ -182,31 +186,42 @@
 		<div id="15" v-if="level === 12">
 			<h1>Quand vous venez attendre un car, quels sont les choses les plus importantes que vous souhaitez trouver
 				? (Classé de 1 à 3 max)</h1>
-			<input type="checkbox" id="1" value="Se sentir en sécurité" v-model="Critere">
 			<label for="1">Se sentir en sécurité</label>
-			<input type="checkbox" id="2" value="Pouvoir s’abriter" v-model="Critere">
+			<input type="checkbox" id="1" value="Se sentir en sécurité" v-model="Critere">
+			<br>
 			<label for="2">Pouvoir s’abriter</label>
-			<input type="checkbox" id="3" value="Pouvoir s’asseoir" v-model="Critere">
+			<input type="checkbox" id="2" value="Pouvoir s’abriter" v-model="Critere">
+			<br>
 			<label for="3">Pouvoir s’asseoir</label>
-			<input type="checkbox" id="4" value="Être proche du centre-ville" v-model="Critere">
+			<input type="checkbox" id="3" value="Pouvoir s’asseoir" v-model="Critere">
+			<br>
 			<label for="4">Être proche du centre-ville</label>
-			<input type="checkbox" id="5" value="Être proche d’une station de transport collectif" v-model="Critere">
+			<input type="checkbox" id="4" value="Être proche du centre-ville" v-model="Critere">
+			<br>
 			<label for="5">Être proche d’une station de transport collectif</label>
-			<input type="checkbox" id="6" value="Pouvoir se garer à proximité en voiture" v-model="Critere">
+			<input type="checkbox" id="5" value="Être proche d’une station de transport collectif" v-model="Critere">
+			<br>
 			<label for="6">Pouvoir se garer à proximité en voiture</label>
-			<input type="checkbox" id="7" value="Pouvoir se garer à proximité à vélo" v-model="Critere">
+			<input type="checkbox" id="6" value="Pouvoir se garer à proximité en voiture" v-model="Critere">
+			<br>
 			<label for="7">Pouvoir se garer à proximité à vélo</label>
-			<input type="checkbox" id="8" value="Trouver facilement mon car" v-model="Critere">
+			<input type="checkbox" id="7" value="Pouvoir se garer à proximité à vélo" v-model="Critere">
+			<br>
 			<label for="8">Trouver facilement mon car</label>
-			<input type="checkbox" id="9" value="Avoir un espace d’attente fermé" v-model="Critere">
+			<input type="checkbox" id="8" value="Trouver facilement mon car" v-model="Critere">
+			<br>
 			<label for="9">Avoir un espace d’attente fermé</label>
-			<input type="checkbox" id="10" value="Avoir le Wifi" v-model="Critere">
+			<input type="checkbox" id="9" value="Avoir un espace d’attente fermé" v-model="Critere">
+			<br>
 			<label for="10">Avoir le Wifi</label>
-			<input type="checkbox" id="11" value="Avoir un espace de vente de repas/boisson" v-model="Critere">
+			<input type="checkbox" id="10" value="Avoir le Wifi" v-model="Critere">
+			<br>
 			<label for="11">Avoir un espace de vente de repas/boisson</label>
-			<input type="checkbox" id="12" value="Autre" v-model="Critere">
+			<input type="checkbox" id="11" value="Avoir un espace de vente de repas/boisson" v-model="Critere">
+			<br>
 			<label for="12">Autre (à préciser)</label>
-
+			<input type="checkbox" id="12" value="Autre" v-model="Critere">
+			<br>
 			<input v-if="Critere.includes('Autre')" class="form-control" type="text" v-model="PrecisionCritere"
 				placeholder="Precisions">
 			<button v-if="Critere" @click="next" class="btn-next">Suivant</button>
@@ -227,16 +242,21 @@
 
 		<div id="17" v-if="level === 14">
 			<h1>Parmi ces services, quels sont les 2 plus importants dans un espace d’attente des cars selon vous :</h1>
-			<input type="checkbox" id="1" value="Vente de repas, boissons ou snacks" v-model="Services">
 			<label for="1">Vente de repas, boissons ou snacks</label>
-			<input type="checkbox" id="2" value="Consignes à bagages automatiques" v-model="Services">
+			<input type="checkbox" id="1" value="Vente de repas, boissons ou snacks" v-model="Services">
+			<br>
 			<label for="2">Consignes à bagages automatiques</label>
-			<input type="checkbox" id="3" value="Wi-Fi" v-model="Services">
+			<input type="checkbox" id="2" value="Consignes à bagages automatiques" v-model="Services">
+			<br>
 			<label for="3">Wi-Fi</label>
-			<input type="checkbox" id="4" value="Toilettes" v-model="Services">
+			<input type="checkbox" id="3" value="Wi-Fi" v-model="Services">
+			<br>
 			<label for="4">Toilettes</label>
-			<input type="checkbox" id="5" value="Prises de courant" v-model="Services">
+			<input type="checkbox" id="4" value="Toilettes" v-model="Services">
+			<br>
 			<label for="5">Prises de courant</label>
+			<input type="checkbox" id="5" value="Prises de courant" v-model="Services">
+			<br>
 			<button v-if="Services" @click="next" class="btn-next">Suivant</button>
 			<button @click="back" class="btn-return">retour</button>
 		</div>
