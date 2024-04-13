@@ -745,10 +745,12 @@ body {
 h1 {
 	text-align: center;
 	color: #4caf50;
+	font-size: 18px;
 }
 
 h2 {
 	color: white;
+	font-size: 16px;
 }
 
 .container {
