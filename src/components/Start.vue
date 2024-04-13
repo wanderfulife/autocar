@@ -475,12 +475,12 @@ const submitSurvey = async () => {
 	PaysPrecision.value = "";
 	Frequence.value = "";
 	FrequenceLille.value = "";
-	MotifLD.value = "";
+	MotifLD.value = [];
 	PrecisionMotifLD.value = "";
-	Critere.value = "";
+	Critere.value = [];
 	PrecisionCritere.value = "";
 	Amenagement.value = "";
-	Services.value = "";
+	Services.value = [];
 	Info.value = "";
 	Securite.value = "";
 	Genre.value = "";
