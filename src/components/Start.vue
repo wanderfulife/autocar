@@ -407,6 +407,9 @@
 		<img class="logo" src="../assets/Alycelogo.webp" alt="Logo Alyce">
 
 		<!-- <button class="btn-fin" @click="downloadData">download DATA</button> -->
+		<div>
+			<button class="btn-fin" @click="getDocCount">Nombre d'enquete : {{ docCount }}</button>
+		</div>
 
 
 	</div>
@@ -428,6 +431,7 @@ import { db } from "../firebaseConfig";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import * as XLSX from "xlsx";
 
+let docCount = ref(null);
 const surveyCollectionRef = collection(db, "Autocar");
 const level = ref(0);
 const startDate = ref('');
@@ -483,6 +487,15 @@ const back = () => {
 }
 
 
+const getDocCount = async () => {
+	try {
+		const querySnapshot = await getDocs(surveyCollectionRef);
+		docCount.value = querySnapshot.size;
+		console.log("Number of documents:", docCount.value);
+	} catch (error) {
+		console.error("Error getting document count:", error);
+	}
+};
 
 const submitSurvey = async () => {
 	await addDoc(surveyCollectionRef, {
@@ -756,6 +769,7 @@ h2 {
 .english {
 	color: cyan;
 }
+
 .container {
 	background-color: #2a3b63;
 	color: white;
@@ -767,6 +781,17 @@ h2 {
 .btn-next {
 	width: 100%;
 	background-color: green;
+	color: white;
+	padding: 20px 20px;
+	margin-top: 20%;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.btn-next {
+	width: 100%;
+	background-color: blue;
 	color: white;
 	padding: 20px 20px;
 	margin-top: 20%;
