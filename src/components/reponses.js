@@ -157,11 +157,6 @@ const frequenceDeplacement = [
 	{ id: 3, output: "1 fois par mois", text: "Au moins 1 fois par mois" },
 	{ id: 4, output: "Plusieurs fois par an", text: "Plusieurs fois par an" },
 	{ id: 5, output: "Moins d’1 fois par an", text: "Moins d’1 fois par an" },
-	{
-		id: 6,
-		output: "Jamais",
-		text: "Jamais",
-	},
 ];
 
 const frequences = [

@@ -48,7 +48,67 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
+
 		<div id="6-7" v-if="level === 5">
+			<h1> Comment êtes-vous arrivé·e à Lille Europe ? </h1>
+			<br>
+			<label for="1">En marchant (au moins 5 min si avec un autre mode de déplacement)</label>
+			<input type="checkbox" id="1" value="Marche" v-model="ModeDeplacement">
+			<br>
+			<label for="2">À vélo personnel</label>
+			<input type="checkbox" id="2" value="Vélo perso" v-model="ModeDeplacement">
+			<br>
+			<label for="3">À vélo partagé (VLille, Tier, Lime)</label>
+			<input type="checkbox" id="3" value="Vélo partagé" v-model="ModeDeplacement">
+			<br>
+			<label for="4">À trottinette personnelle</label>
+			<input type="checkbox" id="4" value="Trottinette perso" v-model="ModeDeplacement">
+			<br>
+			<label for="5">En transports en commun urbains (métro, tram, bus urbains…)</label>
+			<input type="checkbox" id="5" value="Transports" v-model="ModeDeplacement">
+			<br>
+			<label for="6">En autocar (FlixBus, BlaBlaCar…)</label>
+			<input type="checkbox" id="6" value="Autocar" v-model="ModeDeplacement">
+			<br>
+			<label for="7">En train (TGV, TER, Intercités…)</label>
+			<input type="checkbox" id="7" value="Train" v-model="ModeDeplacement">
+			<br>
+			<label for="8">En voiture en tant que conduct·eur·rice</label>
+			<input type="checkbox" id="8" value="Conducteur" v-model="ModeDeplacement">
+			<br>
+			<label for="9">En voiture en tant que passag·er·ère</label>
+			<input type="checkbox" id="9" value="Passager" v-model="ModeDeplacement">
+			<br>
+			<label for="10">J’ai été déposé par un proche</label>
+			<input type="checkbox" id="10" value="Déposé par proche" v-model="ModeDeplacement">
+			<br>
+			<label for="11">C’était un covoiturage formel (via une plateforme type BlaBlaCar)</label>
+			<input type="checkbox" id="11" value="Covoiturage" v-model="ModeDeplacement">
+			<br>
+			<label for="12">Autre (préciser)</label>
+			<input type="checkbox" id="12" value="Autre" v-model="ModeDeplacement">
+			<br>
+			<div v-if="ModeDeplacement.includes('Passager')">
+				<h1>Passag·er·ère :</h1>
+				<select v-model="PassagerQ1" class="form-control">
+					<option v-for="option in passagere1" :key="option.id" :value="option.output">
+						{{ option.text }}
+					</option>
+				</select>
+				<h1>Le conducteur a-t-il … ?</h1>
+				<select v-model="PassagerQ2" class="form-control">
+					<option v-for="option in passagere2" :key="option.id" :value="option.output">
+						{{ option.text }}
+					</option>
+				</select>
+			</div>
+			<input v-if="ModeDeplacement.includes('Autre')" class="form-control" type="text"
+				v-model="ModeDeplacementPrecision" placeholder="Precisez">
+			<button v-if="ModeDeplacement" @click="next" class="btn-next">Suivant</button>
+			<button @click="back" class="btn-return">retour</button>
+		</div>
+
+		<!-- <div id="6-7" v-if="level === 5">
 			<h1> Comment êtes-vous arrivé·e à Lille Europe ? </h1>
 			<select v-model="ModeDeplacement" class="form-control">
 				<option v-for="option in modesDeplacement" :key="option.id" :value="option.output">
@@ -73,7 +133,10 @@
 				v-model="ModeDeplacementPrecision" placeholder="Precisez">
 			<button v-if="ModeDeplacement" @click="next" class="btn-next">Suivant</button>
 			<button @click="back" class="btn-return">retour</button>
-		</div>
+		</div> -->
+
+
+
 
 		<div id="8" v-if="level === 6">
 			<h1>Avec combien de personnes effectuez-vous ce déplacement en autocar ? <br>(si tout seul, alors zéro)</h1>
@@ -85,6 +148,11 @@
 
 		<div id="9 - 10" v-if="level === 7">
 			<h1>Quel est le motif de votre voyage ?</h1>
+			<h2>Note enquêteur : <br>
+				si réponse = « pour aller à l’aéroport », faites préciser le motif du déplacement en
+				avion parmi la liste proposée
+				<br> logement occasionnel  = chambre étudiant, résidence secondaire, etc.
+			</h2>
 			<select v-model="Motif" class="form-control">
 				<option v-for="option in motifsDeplacement" :key="option.id" :value="option.output">
 					{{ option.text }}
@@ -136,10 +204,9 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
-		<div id="12" v-if="level === 9">
+		<div id="12" v-if="level === 9 && Compagnie !== 'Flibco'">
 			<h1> A quelle fréquence utilisez-vous les cars longue distance de type FlixBus, OuiBus, Blablacar… que ce
-				soit à Lille ou ailleurs ?<br> (les navettes aéroports type Flibco ne sont pas concernées par cette
-				question) </h1>
+				soit à Lille ou ailleurs ? </h1>
 			<select v-model="Frequence" class="form-control">
 				<option v-for="option in frequenceDeplacement" :key="option.id" :value="option.output">
 					{{ option.text }}
@@ -149,7 +216,7 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
-		<div id="13" v-if="level === 10">
+		<div id="13" v-if="level === 10 && Compagnie !== 'Flibco' || level === 9 && Compagnie === 'Flibco'">
 			<h1> Avez-vous l’habitude de prendre l’autocar à Lille Europe (y compris navettes aéroports, mais ne pas
 				tenir compte des bus Ilévia)? </h1>
 			<select v-model="FrequenceLille" class="form-control">
@@ -161,9 +228,11 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
-		<div id="14" v-if="level === 11">
+		<div id="14" v-if="level === 11 && Compagnie !== 'Flibco' || level === 10 && Compagnie === 'Flibco'">
 			<h1>Pour quel(s) motif(s) utilisez-vous généralement les cars longue distance de type FlixBus, BlaBlaCar… ?
 			</h1>
+			<h2>Note enquêteur :<br> si réponse = « pour aller à l’aéroport », faites préciser le motif du
+				déplacement en avion parmi la liste proposée</h2>
 			<label for="1">Déplacement professionnel </label>
 			<input type="checkbox" id="1" value="Déplacement professionnel" v-model="MotifLD">
 			<br>
@@ -185,9 +254,9 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
-		<div id="15" v-if="level === 12">
+		<div id="15" v-if="level === 12 && Compagnie !== 'Flibco' || level === 11 && Compagnie === 'Flibco'">
 			<h1>Quand vous venez attendre un car, quels sont les choses les plus importantes que vous souhaitez trouver
-				? (Classé de 1 à 3 max)</h1>
+				? <br> (Classé de 1 à 3 MAX)</h1>
 			<label for="1">Se sentir en sécurité</label>
 			<input type="checkbox" id="1" value="Se sentir en sécurité" v-model="Critere">
 			<br>
@@ -230,8 +299,8 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
-		<div id="16" v-if="level === 13">
-			<h1> Pour vous, l’idéal pour attendre votre autocar, c’est :</h1>
+		<div id="16" v-if="level === 13 && Compagnie !== 'Flibco' || level === 12 && Compagnie === 'Flibco'">
+			<h1> Pour vous, l’idéal pour attendre votre autocar, c’est : </h1>
 			<select v-model="Amenagement" class="form-control">
 				<option v-for="option in amenagementsArretsBus" :key="option.id" :value="option.output">
 					{{ option.text }}
@@ -242,8 +311,9 @@
 		</div>
 
 
-		<div id="17" v-if="level === 14">
-			<h1>Parmi ces services, quels sont les 2 plus importants dans un espace d’attente des cars selon vous :</h1>
+		<div id="17" v-if="level === 14 && Compagnie !== 'Flibco' || level === 13 && Compagnie === 'Flibco'">
+			<h1>Parmi ces services, quels sont les 2 plus importants dans un espace d’attente des cars selon vous :<br>
+				(Classé de 1 à 2 MAX)</h1>
 			<label for="1">Vente de repas, boissons ou snacks</label>
 			<input type="checkbox" id="1" value="Vente de repas, boissons ou snacks" v-model="Services">
 			<br>
@@ -263,7 +333,7 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
-		<div id="18" v-if="level === 15">
+		<div id="18" v-if="level === 15 && Compagnie !== 'Flibco' || level === 14 && Compagnie === 'Flibco'">
 			<h1> Concernant l’information, vous préférez :</h1>
 			<select v-model="Info" class="form-control">
 				<option v-for="option in informationsArretsBus" :key="option.id" :value="option.output">
@@ -274,7 +344,7 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
-		<div id="19" v-if="level === 16">
+		<div id="19" v-if="level === 16 && Compagnie !== 'Flibco' || level === 15 && Compagnie === 'Flibco'">
 			<h1>En matière de sécurité, vous préférez :</h1>
 			<select v-model="Securite" class="form-control">
 				<option v-for="option in securiteArretsBus" :key="option.id" :value="option.output">
@@ -285,7 +355,7 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
-		<div id="20" v-if="level === 17">
+		<div id="20" v-if="level === 17 && Compagnie !== 'Flibco' || level === 16 && Compagnie === 'Flibco'">
 			<h1>Vous êtes…</h1>
 			<select v-model="Genre" class="form-control">
 				<option v-for="option in optionsGenre" :key="option.id" :value="option.output">
@@ -296,7 +366,7 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
-		<div id="21" v-if="level === 18">
+		<div id="21" v-if="level === 18 && Compagnie !== 'Flibco' || level === 17 && Compagnie === 'Flibco'">
 			<h1>Quel est votre âge ?</h1>
 			<select v-model="Age" class="form-control">
 				<option v-for="option in tranchesAge" :key="option.id" :value="option.output">
@@ -307,7 +377,7 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
-		<div id="22" v-if="level === 19">
+		<div id="22" v-if="level === 19 && Compagnie !== 'Flibco' || level === 18 && Compagnie === 'Flibco'">
 			<h1>Dans quel pays habitez-vous ?</h1>
 			<h1>(Si réside en France) Quel est le code postal de votre commune de résidence ?</h1>
 			<div>
@@ -317,7 +387,7 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
-		<div id="23" v-if="level === 20">
+		<div id="23" v-if="level === 20 && Compagnie !== 'Flibco' || level === 19 && Compagnie === 'Flibco'">
 			<h1> Quelle est votre catégorie socio-professionnelle ? </h1>
 			<select v-model="Profession" class="form-control">
 				<option v-for="option in categoriesProfessionnelles" :key="option.id" :value="option.output">
@@ -330,7 +400,7 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
-		<div v-if="level === 21">
+		<div v-if="level === 21 && Compagnie !== 'Flibco' || level === 20 && Compagnie === 'Flibco'">
 			<button @click="submitSurvey" class="btn-next">FINIR QUESTIONNAIRE</button>
 			<button @click="back" class="btn-return">retour</button>
 		</div>
@@ -366,7 +436,7 @@ const NbrPersArretBus = ref('');
 const NbrCarArretBus = ref('');
 const Compagnie = ref('');
 const CompagniePrecision = ref('');
-const ModeDeplacement = ref('');
+const ModeDeplacement = ref([]);
 const ModeDeplacementPrecision = ref('');
 const PassagerQ1 = ref('');
 const PassagerQ2 = ref('');
@@ -405,7 +475,7 @@ const startSurvey = () => {
 
 const next = () => {
 	level.value++;
-
+	console.log(level.value)
 }
 
 const back = () => {
@@ -460,7 +530,7 @@ const submitSurvey = async () => {
 	NbrCarArretBus.value = "";
 	Compagnie.value = "";
 	CompagniePrecision.value = "";
-	ModeDeplacement.value = "";
+	ModeDeplacement.value = [];
 	ModeDeplacementPrecision.value = "";
 	PassagerQ1.value = "";
 	PassagerQ2.value = "";
@@ -617,6 +687,17 @@ const downloadData = async () => {
 				}
 				// Remove the trailing comma and space from the string
 				mappedData.Services = servicesString.slice(0, -2);
+			}
+
+			if (docData.ModeDeplacement) {
+				let ModeDeplacementString = "";
+				for (const key in docData.ModeDeplacement) {
+					const value = docData.ModeDeplacement[key];
+					// You can customize the separator here (e.g., comma, semicolon)
+					ModeDeplacementString += `${key}: ${value}, `;
+				}
+				// Remove the trailing comma and space from the string
+				mappedData.ModeDeplacement = ModeDeplacementString.slice(0, -2);
 			}
 
 			data.push(mappedData);
