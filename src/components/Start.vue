@@ -416,7 +416,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import {
 	nbPersArret, OptionsTransport, modesDeplacement, passagere1, passagere2, motifsDeplacement,
 	raisonsDeplacement, paysOptions, lieuxFrance, lieuxBelgique,
@@ -470,7 +470,6 @@ const Profession = ref('');
 const PrecisionProfession = ref('');
 
 
-
 const startSurvey = () => {
 	startDate.value = new Date().toLocaleTimeString("fr-FR").slice(0, 8);
 	level.value++;
@@ -491,11 +490,12 @@ const getDocCount = async () => {
 	try {
 		const querySnapshot = await getDocs(surveyCollectionRef);
 		docCount.value = querySnapshot.size;
-		console.log("Number of documents:", docCount.value);
 	} catch (error) {
 		console.error("Error getting document count:", error);
 	}
 };
+
+onMounted(getDocCount);
 
 const submitSurvey = async () => {
 	await addDoc(surveyCollectionRef, {
