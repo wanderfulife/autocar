@@ -408,7 +408,7 @@
 
 		<!-- <button class="btn-fin" @click="downloadData">download DATA</button> -->
 		<div>
-			<button class="btn-fin" @click="getDocCount">Nombre d'enquete : {{ docCount }}</button>
+			<span  style="margin-left: 10px;">Nombre de questionnaires : {{ docCount }}</span>
 		</div>
 
 
@@ -431,7 +431,7 @@ import { db } from "../firebaseConfig";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import * as XLSX from "xlsx";
 
-let docCount = ref(null);
+const docCount = ref(0);
 const surveyCollectionRef = collection(db, "Autocar");
 const level = ref(0);
 const startDate = ref('');
@@ -571,6 +571,7 @@ const submitSurvey = async () => {
 	PaysCommune.value = "";
 	Profession.value = "";
 	PrecisionProfession.value = "";
+	getDocCount();
 };
 
 const downloadData = async () => {
@@ -789,16 +790,6 @@ h2 {
 	cursor: pointer;
 }
 
-.btn-next {
-	width: 100%;
-	background-color: blue;
-	color: white;
-	padding: 20px 20px;
-	margin-top: 20%;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-}
 
 .btn-fin {
 	width: 100%;
