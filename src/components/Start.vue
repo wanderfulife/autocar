@@ -28,14 +28,21 @@
 		<div v-if="level === 3">
 			<h1>Bonjour,<br>je m’appelle XXX et je réalise une enquête pour le compte de la Métropole
 				Européenne de Lille sur l’utilisation des services de transports assuré par autocar,<br>
-				accepteriez-vous de
-				répondre à quelques questions de manière anonyme,<br> cela prendra moins de 5 minutes ?</h1>
+				accepteriez-vous de répondre à quelques questions de manière anonyme,<br> cela prendra moins de 5
+				minutes ?</h1>
+			<h1>
+				<h1 class="english">Hello,<br>my name is XXX and I am conducting a survey on behalf of the Lille
+					European Metropolis
+					regarding the use of coach transport services,<br>would you agree to answer a few questions
+					anonymously,<br>it will take less than 5 minutes?</h1>
+			</h1>
 			<button @click="startSurvey" class="btn-next">COMMENCER QUESTIONNAIRE</button>
 		</div>
 
 
 		<div id="5" v-if="level === 4">
 			<h1> Quelle compagnie de car allez-vous utiliser ? </h1>
+			<h1 class="english">Which coach company will you be using?</h1>
 			<h2>Note enquêteur : les bus Blablacar s’appelaient auparavant Blablabus ou Ouibus.</h2>
 			<select v-model="Compagnie" class="form-control">
 				<option v-for="option in OptionsTransport" :key="option.id" :value="option.output">
@@ -51,41 +58,42 @@
 
 		<div id="6-7" v-if="level === 5">
 			<h1> Comment êtes-vous arrivé·e à Lille Europe ? </h1>
+			<h1 class="english">How did you arrive at Lille Europe?</h1>
 			<br>
-			<label for="1">En marchant (au moins 5 min si avec un autre mode de déplacement)</label>
+			<label for="1">En marchant (au moins 5 min si avec un autre mode de déplacement) // Walking</label>
 			<input type="checkbox" id="1" value="Marche" v-model="ModeDeplacement">
 			<br>
-			<label for="2">À vélo personnel</label>
+			<label for="2">À vélo personnel // Personnal bike</label>
 			<input type="checkbox" id="2" value="Vélo perso" v-model="ModeDeplacement">
 			<br>
-			<label for="3">À vélo partagé (VLille, Tier, Lime)</label>
+			<label for="3">À vélo partagé (VLille, Tier, Lime) // Shared bike</label>
 			<input type="checkbox" id="3" value="Vélo partagé" v-model="ModeDeplacement">
 			<br>
-			<label for="4">À trottinette personnelle</label>
+			<label for="4">À trottinette personnelle // Personnal scooter</label>
 			<input type="checkbox" id="4" value="Trottinette perso" v-model="ModeDeplacement">
 			<br>
-			<label for="5">En transports en commun urbains (métro, tram, bus urbains…)</label>
+			<label for="5">En transports en commun urbains (métro, tram, bus urbains…) // Public transports</label>
 			<input type="checkbox" id="5" value="Transports" v-model="ModeDeplacement">
 			<br>
-			<label for="6">En autocar (FlixBus, BlaBlaCar…)</label>
+			<label for="6">En autocar (FlixBus, BlaBlaCar…) // By Coach</label>
 			<input type="checkbox" id="6" value="Autocar" v-model="ModeDeplacement">
 			<br>
-			<label for="7">En train (TGV, TER, Intercités…)</label>
+			<label for="7">En train (TGV, TER, Intercités…) // By Train</label>
 			<input type="checkbox" id="7" value="Train" v-model="ModeDeplacement">
 			<br>
-			<label for="8">En voiture en tant que conduct·eur·rice</label>
+			<label for="8">En voiture en tant que conduct·eur·rice // By car, Driving</label>
 			<input type="checkbox" id="8" value="Conducteur" v-model="ModeDeplacement">
 			<br>
-			<label for="9">En voiture en tant que passag·er·ère</label>
+			<label for="9">En voiture en tant que passag·er·ère // By car, Passenger</label>
 			<input type="checkbox" id="9" value="Passager" v-model="ModeDeplacement">
 			<br>
-			<label for="10">J’ai été déposé par un proche</label>
+			<label for="10">J’ai été déposé par un proche // Dropped by a relative</label>
 			<input type="checkbox" id="10" value="Déposé par proche" v-model="ModeDeplacement">
 			<br>
-			<label for="11">C’était un covoiturage formel (via une plateforme type BlaBlaCar)</label>
+			<label for="11">C’était un covoiturage formel (via une plateforme type BlaBlaCar) // Carpooling</label>
 			<input type="checkbox" id="11" value="Covoiturage" v-model="ModeDeplacement">
 			<br>
-			<label for="12">Autre (préciser)</label>
+			<label for="12">Autre (préciser) // Other</label>
 			<input type="checkbox" id="12" value="Autre" v-model="ModeDeplacement">
 			<br>
 			<div v-if="ModeDeplacement.includes('Passager')">
@@ -108,38 +116,9 @@
 			<button @click="back" class="btn-return">retour</button>
 		</div>
 
-		<!-- <div id="6-7" v-if="level === 5">
-			<h1> Comment êtes-vous arrivé·e à Lille Europe ? </h1>
-			<select v-model="ModeDeplacement" class="form-control">
-				<option v-for="option in modesDeplacement" :key="option.id" :value="option.output">
-					{{ option.text }}
-				</option>
-			</select>
-			<div v-if="ModeDeplacement === 'Passager'">
-				<h1>Passag·er·ère :</h1>
-				<select v-model="PassagerQ1" class="form-control">
-					<option v-for="option in passagere1" :key="option.id" :value="option.output">
-						{{ option.text }}
-					</option>
-				</select>
-				<h1>Le conducteur a-t-il … ?</h1>
-				<select v-model="PassagerQ2" class="form-control">
-					<option v-for="option in passagere2" :key="option.id" :value="option.output">
-						{{ option.text }}
-					</option>
-				</select>
-			</div>
-			<input v-if="ModeDeplacement === 'Autre'" class="form-control" type="text"
-				v-model="ModeDeplacementPrecision" placeholder="Precisez">
-			<button v-if="ModeDeplacement" @click="next" class="btn-next">Suivant</button>
-			<button @click="back" class="btn-return">retour</button>
-		</div> -->
-
-
-
-
 		<div id="8" v-if="level === 6">
 			<h1>Avec combien de personnes effectuez-vous ce déplacement en autocar ? <br>(si tout seul, alors zéro)</h1>
+			<h1 class="english">With how many people are you making this coach trip?</h1>
 			<input class="form-control" type="text" v-model="NbrPers" placeholder="0 - 99">
 			<button v-if="NbrPers" @click="next" class="btn-next">Suivant</button>
 			<button @click="back" class="btn-return">retour</button>
@@ -148,6 +127,7 @@
 
 		<div id="9 - 10" v-if="level === 7">
 			<h1>Quel est le motif de votre voyage ?</h1>
+			<h1 class="english">What is the purpose of your trip?</h1>
 			<h2>Note enquêteur : <br>
 				si réponse = « pour aller à l’aéroport », faites préciser le motif du déplacement en
 				avion parmi la liste proposée
@@ -160,6 +140,7 @@
 			</select>
 			<div v-if="Motif === 'Rentrer'">
 				<h1>Pour quel motif êtes-vous venu à Lille ?</h1>
+				<h1 class="english">For what reason did you come to Lille?</h1>
 				<select v-model="MotifVenue" class="form-control">
 					<option v-for="option in raisonsDeplacement" :key="option.id" :value="option.output">
 						{{ option.text }}
@@ -176,6 +157,7 @@
 
 		<div id="11" v-if="level === 8">
 			<h1>Quelle est votre destination avec cet autocar ? </h1>
+			<h1 class="english">What is your destination with this coach?</h1>
 			<select v-model="Pays" class="form-control">
 				<option v-for="option in paysOptions" :key="option.id" :value="option.output">
 					{{ option.text }}
@@ -207,6 +189,9 @@
 		<div id="12" v-if="level === 9 && Compagnie !== 'Flibco'">
 			<h1> A quelle fréquence utilisez-vous les cars longue distance de type FlixBus, OuiBus, Blablacar… que ce
 				soit à Lille ou ailleurs ? </h1>
+			<h1 class="english">How often do you use long-distance coach services such as FlixBus, OuiBus, Blablacar,
+				whether in Lille
+				or elsewhere?</h1>
 			<select v-model="Frequence" class="form-control">
 				<option v-for="option in frequenceDeplacement" :key="option.id" :value="option.output">
 					{{ option.text }}
@@ -219,6 +204,7 @@
 		<div id="13" v-if="level === 10 && Compagnie !== 'Flibco' || level === 9 && Compagnie === 'Flibco'">
 			<h1> Avez-vous l’habitude de prendre l’autocar à Lille Europe (y compris navettes aéroports, mais ne pas
 				tenir compte des bus Ilévia)? </h1>
+			<h1 class="english">Do you usually take the coach at Lille Europe </h1>
 			<select v-model="FrequenceLille" class="form-control">
 				<option v-for="option in frequences" :key="option.id" :value="option.output">
 					{{ option.text }}
@@ -231,21 +217,24 @@
 		<div id="14" v-if="level === 11 && Compagnie !== 'Flibco' || level === 10 && Compagnie === 'Flibco'">
 			<h1>Pour quel(s) motif(s) utilisez-vous généralement les cars longue distance de type FlixBus, BlaBlaCar… ?
 			</h1>
+			<h1 class="english">For what reason(s) do you typically use long-distance coaches such as FlixBus,
+				BlaBlaCar...?</h1>
+
 			<h2>Note enquêteur :<br> si réponse = « pour aller à l’aéroport », faites préciser le motif du
 				déplacement en avion parmi la liste proposée</h2>
-			<label for="1">Déplacement professionnel </label>
+			<label for="1">Déplacement professionnel // Business trip</label>
 			<input type="checkbox" id="1" value="Déplacement professionnel" v-model="MotifLD">
 			<br>
-			<label for="2">Visite à des proches</label>
+			<label for="2">Visite à des proches // Visit relatives</label>
 			<input type="checkbox" id="2" value="Visite à des proches" v-model="MotifLD">
 			<br>
-			<label for="3">Vacances / Loisirs</label>
+			<label for="3">Vacances, Loisirs // Holidays</label>
 			<input type="checkbox" id="3" value="Vacances / Loisirs" v-model="MotifLD">
 			<br>
-			<label for="4">Rejoindre un logement occasionnel</label>
+			<label for="4">Rejoindre un logement occasionnel // occasional accommodation</label>
 			<input type="checkbox" id="4" value="logement occasionnel" v-model="MotifLD">
 			<br>
-			<label for="5">Autre (préciser)</label>
+			<label for="5">Autre (préciser) // Other</label>
 			<input type="checkbox" id="5" value="Autre" v-model="MotifLD">
 			<br>
 			<input v-if="MotifLD.includes('Autre')" class="form-control" type="text" v-model="PrecisionMotifLD"
@@ -257,40 +246,42 @@
 		<div id="15" v-if="level === 12 && Compagnie !== 'Flibco' || level === 11 && Compagnie === 'Flibco'">
 			<h1>Quand vous venez attendre un car, quels sont les choses les plus importantes que vous souhaitez trouver
 				? <br> (Classé de 1 à 3 MAX)</h1>
-			<label for="1">Se sentir en sécurité</label>
+			<h1 class="english">When you come to wait for a coach, what are the most important things you want to find?
+			</h1>
+			<label for="1">Se sentir en sécurité // Feeling safe</label>
 			<input type="checkbox" id="1" value="Se sentir en sécurité" v-model="Critere">
 			<br>
-			<label for="2">Pouvoir s’abriter</label>
+			<label for="2">Pouvoir s’abriter // Being able to shelter</label>
 			<input type="checkbox" id="2" value="Pouvoir s’abriter" v-model="Critere">
 			<br>
-			<label for="3">Pouvoir s’asseoir</label>
+			<label for="3">Pouvoir s’asseoir // Being able to sit</label>
 			<input type="checkbox" id="3" value="Pouvoir s’asseoir" v-model="Critere">
 			<br>
-			<label for="4">Être proche du centre-ville</label>
+			<label for="4">Être proche du centre-ville // Being close to the center</label>
 			<input type="checkbox" id="4" value="Être proche du centre-ville" v-model="Critere">
 			<br>
-			<label for="5">Être proche d’une station de transport collectif</label>
+			<label for="5">Être proche d’une station de transport collectif // Being close to public transports</label>
 			<input type="checkbox" id="5" value="Être proche d’une station de transport collectif" v-model="Critere">
 			<br>
-			<label for="6">Pouvoir se garer à proximité en voiture</label>
+			<label for="6">Pouvoir se garer à proximité en voiture // Being able to park nearby by car</label>
 			<input type="checkbox" id="6" value="Pouvoir se garer à proximité en voiture" v-model="Critere">
 			<br>
-			<label for="7">Pouvoir se garer à proximité à vélo</label>
+			<label for="7">Pouvoir se garer à proximité à vélo // Being able to park nearby by bike</label>
 			<input type="checkbox" id="7" value="Pouvoir se garer à proximité à vélo" v-model="Critere">
 			<br>
-			<label for="8">Trouver facilement mon car</label>
+			<label for="8">Trouver facilement mon car // Easily find my bus</label>
 			<input type="checkbox" id="8" value="Trouver facilement mon car" v-model="Critere">
 			<br>
-			<label for="9">Avoir un espace d’attente fermé</label>
+			<label for="9">Avoir un espace d’attente fermé // Have a closed waiting area</label>
 			<input type="checkbox" id="9" value="Avoir un espace d’attente fermé" v-model="Critere">
 			<br>
-			<label for="10">Avoir le Wifi</label>
+			<label for="10">Avoir le Wifi // To get wifi</label>
 			<input type="checkbox" id="10" value="Avoir le Wifi" v-model="Critere">
 			<br>
-			<label for="11">Avoir un espace de vente de repas/boisson</label>
+			<label for="11">Avoir un espace de vente de repas/boisson // Have a meal/drink sales area</label>
 			<input type="checkbox" id="11" value="Avoir un espace de vente de repas/boisson" v-model="Critere">
 			<br>
-			<label for="12">Autre (à préciser)</label>
+			<label for="12">Autre (à préciser) // Other</label>
 			<input type="checkbox" id="12" value="Autre" v-model="Critere">
 			<br>
 			<input v-if="Critere.includes('Autre')" class="form-control" type="text" v-model="PrecisionCritere"
@@ -301,6 +292,7 @@
 
 		<div id="16" v-if="level === 13 && Compagnie !== 'Flibco' || level === 12 && Compagnie === 'Flibco'">
 			<h1> Pour vous, l’idéal pour attendre votre autocar, c’est : </h1>
+			<h1 class="english"> For you, the ideal place to wait for your coach is: </h1>
 			<select v-model="Amenagement" class="form-control">
 				<option v-for="option in amenagementsArretsBus" :key="option.id" :value="option.output">
 					{{ option.text }}
@@ -314,19 +306,21 @@
 		<div id="17" v-if="level === 14 && Compagnie !== 'Flibco' || level === 13 && Compagnie === 'Flibco'">
 			<h1>Parmi ces services, quels sont les 2 plus importants dans un espace d’attente des cars selon vous :<br>
 				(Classé de 1 à 2 MAX)</h1>
-			<label for="1">Vente de repas, boissons ou snacks</label>
+			<h1 class="english">Among these services, which two are the most important in a coach waiting area, in your
+				opinion:</h1>
+			<label for="1">Vente de repas, boissons ou snacks // Have a meal/drink sales area</label>
 			<input type="checkbox" id="1" value="Vente de repas, boissons ou snacks" v-model="Services">
 			<br>
-			<label for="2">Consignes à bagages automatiques</label>
+			<label for="2">Consignes à bagages automatiques // Automatic baggage lockers</label>
 			<input type="checkbox" id="2" value="Consignes à bagages automatiques" v-model="Services">
 			<br>
 			<label for="3">Wi-Fi</label>
 			<input type="checkbox" id="3" value="Wi-Fi" v-model="Services">
 			<br>
-			<label for="4">Toilettes</label>
+			<label for="4">Toilettes // Bathroom</label>
 			<input type="checkbox" id="4" value="Toilettes" v-model="Services">
 			<br>
-			<label for="5">Prises de courant</label>
+			<label for="5">Prises de courant // Outlets</label>
 			<input type="checkbox" id="5" value="Prises de courant" v-model="Services">
 			<br>
 			<button v-if="Services" @click="next" class="btn-next">Suivant</button>
@@ -335,6 +329,7 @@
 
 		<div id="18" v-if="level === 15 && Compagnie !== 'Flibco' || level === 14 && Compagnie === 'Flibco'">
 			<h1> Concernant l’information, vous préférez :</h1>
+			<h1 class="english">Regarding information, you prefer:</h1>
 			<select v-model="Info" class="form-control">
 				<option v-for="option in informationsArretsBus" :key="option.id" :value="option.output">
 					{{ option.text }}
@@ -346,6 +341,7 @@
 
 		<div id="19" v-if="level === 16 && Compagnie !== 'Flibco' || level === 15 && Compagnie === 'Flibco'">
 			<h1>En matière de sécurité, vous préférez :</h1>
+			<h1 class="english">In terms of security, you prefer:</h1>
 			<select v-model="Securite" class="form-control">
 				<option v-for="option in securiteArretsBus" :key="option.id" :value="option.output">
 					{{ option.text }}
@@ -357,6 +353,7 @@
 
 		<div id="20" v-if="level === 17 && Compagnie !== 'Flibco' || level === 16 && Compagnie === 'Flibco'">
 			<h1>Vous êtes…</h1>
+			<h1 class="english">You are ...</h1>
 			<select v-model="Genre" class="form-control">
 				<option v-for="option in optionsGenre" :key="option.id" :value="option.output">
 					{{ option.text }}
@@ -368,6 +365,7 @@
 
 		<div id="21" v-if="level === 18 && Compagnie !== 'Flibco' || level === 17 && Compagnie === 'Flibco'">
 			<h1>Quel est votre âge ?</h1>
+			<h1 class="english">How old are you</h1>
 			<select v-model="Age" class="form-control">
 				<option v-for="option in tranchesAge" :key="option.id" :value="option.output">
 					{{ option.text }}
@@ -379,6 +377,7 @@
 
 		<div id="22" v-if="level === 19 && Compagnie !== 'Flibco' || level === 18 && Compagnie === 'Flibco'">
 			<h1>Dans quel pays habitez-vous ?</h1>
+			<h1 class="english">What country do you live in?</h1>
 			<h1>(Si réside en France) Quel est le code postal de votre commune de résidence ?</h1>
 			<div>
 				<CommuneSelector v-model="PaysCommune" />
@@ -389,6 +388,7 @@
 
 		<div id="23" v-if="level === 20 && Compagnie !== 'Flibco' || level === 19 && Compagnie === 'Flibco'">
 			<h1> Quelle est votre catégorie socio-professionnelle ? </h1>
+			<h1 class="english">What is your socio-professional category?</h1>
 			<select v-model="Profession" class="form-control">
 				<option v-for="option in categoriesProfessionnelles" :key="option.id" :value="option.output">
 					{{ option.text }}
@@ -753,6 +753,9 @@ h2 {
 	font-size: 16px;
 }
 
+.english {
+	color: cyan;
+}
 .container {
 	background-color: #2a3b63;
 	color: white;
